@@ -1,0 +1,14 @@
+{
+	"name": "html5-game-from-scratch",
+	"version": "1.0.0",
+	"devDependencies": {
+		"gulp": "latest",
+		"gulp-webserver": "latest",
+		"gulp-clean": "latest",
+		"gulp-useref": "latest",
+		"gulp-if": "latest",
+		"gulp-uglify": "latest",
+		"gulp-clean-css": "latest",
+		"run-sequence": "latest"
+	}
+}
