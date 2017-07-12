@@ -56,7 +56,7 @@
 		} else {
 			return (e);
 		}
-	}
+	};
 
 	// Modify the error (when raised), to show proper stacktrace
 	window.addEventListener("error", function(e) {

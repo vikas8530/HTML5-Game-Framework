@@ -1,0 +1,50 @@
+<html>
+	<head>	
+
+		<!-- Framework specific css/scripts/... START-->
+
+		<!-- build:css ./styles/gameStyles.css -->
+		<link rel="stylesheet" href="./framework/styles/GameStyles.css"/>
+		<!-- endbuild -->
+
+		<!-- build:js ./scripts/lib.js -->
+		<script type="text/javascript" src="vendors/jquery-3.2.1.js"></script>
+		<script type="text/javascript" src="vendors/Font.js"></script>
+		<!-- endbuild -->
+
+		<!-- build:js ./scripts/gameFramework.js -->
+		<script type="text/javascript" src="framework/scripts/GamePolyfills.js"></script>
+		<script type="text/javascript" src="framework/scripts/Game.js"></script>
+		<script type="text/javascript" src="framework/scripts/GameShared.js"></script>
+		<script type="text/javascript" src="framework/scripts/GameExceptions.js"></script>
+		<script type="text/javascript" src="framework/scripts/GameScript.js"></script>
+		<script type="text/javascript" src="framework/scripts/GameSprite.js"></script>
+		<script type="text/javascript" src="framework/scripts/GameBackground.js"></script>
+		<script type="text/javascript" src="framework/scripts/GameSound.js"></script>
+		<script type="text/javascript" src="framework/scripts/GameFont.js"></script>
+		<script type="text/javascript" src="framework/scripts/GameObject.js"></script>
+		<script type="text/javascript" src="framework/scripts/GameRoom.js"></script>
+		<script type="text/javascript" src="framework/scripts/GameRenderingHelper.js"></script>
+		<!-- endbuild -->
+
+		<!-- Framework specific css/scripts/... END-->
+
+
+		<!-- Custom css/scripts/...  START-->
+
+		<!-- build:js ./scripts/game.js -->
+		<script type="text/javascript" src="./src/scripts/main.js"></script>
+		<!-- endbuild -->
+
+		<!-- build:css ./styles/styles.css -->
+		<link rel="stylesheet" href="./src/styles/game.css"/>
+		<!-- endbuild -->
+
+		<!-- Custom css/scripts/...  END-->
+
+	</head>
+	<body>
+		<div id="gameWrapper">
+		</div>
+	</body>
+</html>

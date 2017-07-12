@@ -26,11 +26,11 @@
 			that.width = image.naturalWidth;
 			that.height = image.naturalHeight;
 			callback();
-		}
+		};
 		image.onerror = function(e) {
 			window.Game.Exceptions.consoleError(new window.Game.Exceptions.ResourceNotFoundException(image.src));
 			callback();
-		}
+		};
 		image.src = window.Game.Shared.rootDirectory + window.Game.Shared.imagesDirectory + this.spriteUrl;
 	};
 	window.Game.Sprite.prototype.draw = function(gameRoom, x, y) {

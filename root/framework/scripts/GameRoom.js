@@ -121,7 +121,7 @@
 		var list = _privates[this.id].objectsSortedForRenderingUsingZIndex;
 		var done = false;
 		for(var i = 0; i < list.length; i++) {
-			if (list.id == ojbect.id) {
+			if (list.id == object.id) {
 				// Remove object from list.
 				_privates[this.id].objectsSortedForRenderingUsingZIndex.splice(i, 1);
 

@@ -231,7 +231,7 @@
 		}
 		var canvas = $("<canvas>", {
 			id: ("game_" + this.id)
-		})
+		});
 		$(canvasWrapperId).append(canvas);
 		_privates[this.id].canvas = canvas[0];
 

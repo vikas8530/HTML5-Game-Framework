@@ -22,11 +22,11 @@
 		font.onload = function() {
 			that.font = font;
 			callback();
-		}
+		};
 		font.onerror = function(e) {
 			window.Game.Exceptions.consoleError(new window.Game.Exceptions.ResourceNotFoundException(font.src));
 			callback();
-		}
+		};
 		font.fontFamily  = this.fontName;
 		font.src =  window.Game.Shared.rootDirectory + window.Game.Shared.fontsDirectory + this.fontUrl;
 	};

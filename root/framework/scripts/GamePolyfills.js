@@ -4,7 +4,7 @@
 	    || window.mozRequestAnimationFrame
 	    || window.webkitRequestAnimationFrame
 	    || window.msRequestAnimationFrame
-	    || function(f){return setTimeout(f, 1000/60)} // simulate calling code 60 
+	    || function(f){return setTimeout(f, 1000/60)}; // simulate calling code 60
 
 	window.cancelAnimationFrame = window.cancelAnimationFrame
 	    || window.mozCancelAnimationFrame

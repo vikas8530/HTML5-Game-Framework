@@ -22,11 +22,11 @@
 		audio.onload = function() {
 			that.sound = audio;
 			callback();
-		}
+		};
 		audio.onerror = function(e) {
 			window.Game.Exceptions.consoleError(new window.Game.Exceptions.ResourceNotFoundException(audio.src));
 			callback();
-		}
+		};
 		audio.src =  window.Game.Shared.rootDirectory + window.Game.Shared.soundsDirectory + this.soundUrl;
 	};
 	window.Game.Sound.prototype.play = function(gameRoom) {
