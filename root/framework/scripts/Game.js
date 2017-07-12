@@ -226,18 +226,17 @@
 		if(_privates[this.id].currentState !== STATE_NEW) {
 			throw "Game already initialized.";
 		}
-		if ($(canvasWrapperId).length != 1) {
+		if (document.querySelectorAll(canvasWrapperId).length != 1) {
 			throw "Please provide a valid DOM element for wrapping game. It should exist and unique.";
 		}
-		var canvas = $("<canvas>", {
-			id: ("game_" + this.id)
-		});
-		$(canvasWrapperId).append(canvas);
-		_privates[this.id].canvas = canvas[0];
+		var canvas = document.createElement("CANVAS");
+		canvas.id = "game_" + this.id;
+        document.querySelector(canvasWrapperId).append(canvas);
+		_privates[this.id].canvas = canvas;
 
 		// Set drawing size equal to visual size
-		_privates[this.id].canvas.width = $(canvasWrapperId).width();
-		_privates[this.id].canvas.height = $(canvasWrapperId).height();
+		_privates[this.id].canvas.width = document.querySelector(canvasWrapperId).offsetWidth;
+		_privates[this.id].canvas.height = document.querySelector(canvasWrapperId).offsetHeight;
 
 		_loadSprites.call(this);
 		_loadBackgrounds.call(this);

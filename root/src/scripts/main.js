@@ -1,4 +1,4 @@
-$(document).ready(function(){
+window.onDocumentReady(function(){
 	"use strict";
 
 	// Define root directory
@@ -6,7 +6,7 @@ $(document).ready(function(){
 
 	// Define all sprites here
 	var sprites = {};
-	sprites.player = new Game.Sprite("spr_player", "spr_player.png");
+	sprites.player = new Game.Sprite("spr_player", "spr_player.jpg");
 
 	// Define all backgrounds here
 	var backgrounds = {};
