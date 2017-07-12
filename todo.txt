@@ -1,0 +1,7 @@
+1. Frames per second reduced to 0 when tab is switched. Handle this scenario when the tab isn't active
+
+
+
+** Canvas performance
+https://www.html5rocks.com/en/tutorials/canvas/performance/
+https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas

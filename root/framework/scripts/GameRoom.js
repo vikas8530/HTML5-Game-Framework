@@ -47,12 +47,12 @@
 		// Defaults for text rendering
 		window.Game.RenderingHelper.setDefaultForRenderingText(this, new window.Game.Font("default", ""), "30px", "black", "left", "top");	
 
-		if(null != this.overriddenOnCreate) {
+		if(null !== this.overriddenOnCreate) {
 			this.overriddenOnCreate(this);
 		}
 
 		// Provide area to background
-		if(_privates[this.id].background.sprite != null) {
+		if(_privates[this.id].background.sprite !== null) {
 			_privates[this.id].background.sprite.setBackgroundArea(this, 0, 0, _privates[this.id].width, _privates[this.id].height);
 		}
 
@@ -71,7 +71,7 @@
 		if (!("string" === typeof objectName)) {
 			throw new window.Game.Exceptions.IllegalArgumentsException("Name of the object is not correct.");
 		}
-		if("undefined" == typeof _privates[this.id].objects[objectName]) {
+		if("undefined" === typeof _privates[this.id].objects[objectName]) {
 			_privates[this.id].objects[objectName] = [];
 		}
 		_privates[this.id].objects[objectName].push(object);
@@ -85,7 +85,7 @@
 		_privates[this.id].background.color = color;
 	};
 	window.Game.Room.prototype.setBackgroundImage = function(background) {
-		if(!(_privates[this.id].background.sprite == null || _privates[this.id].background.sprite instanceof window.Game.Background)) {
+		if(!(_privates[this.id].background.sprite === null || _privates[this.id].background.sprite instanceof window.Game.Background)) {
 			throw new window.Game.Exceptions.IllegalArgumentsException("setBackgroundImage function expects null or window.Game.Background");
 		}
 		_privates[this.id].background.sprite = background;
@@ -99,17 +99,18 @@
 		}
 	};
 	window.Game.Room.prototype.drawBackground = function() {
-		// draw color
-		if(_privates[this.id].background.color != null) {
-			var ctx = _privates[this.id].canvasContext;
-			ctx.fillStyle = _privates[this.id].background.color;
-			ctx.fillRect(0, 0, _privates[this.id].width, _privates[this.id].height);
-		}
+		// Either background image or color will be rendered. Not both.
+		// Preference given to background image
 
-		// draw image
-		if(_privates[this.id].background.sprite != null) {
+		if(_privates[this.id].background.sprite !== null) {
+            // draw image
 			_privates[this.id].background.sprite.draw(this);
-		}
+		} else if(_privates[this.id].background.color !== null) {
+            // draw color
+            var ctx = _privates[this.id].canvasContext;
+            ctx.fillStyle = _privates[this.id].background.color;
+            ctx.fillRect(0, 0, _privates[this.id].width, _privates[this.id].height);
+        }
 	};
 	window.Game.Room.prototype.drawObjects = function() {
 		var objects = _privates[this.id].objectsSortedForRenderingUsingZIndex;
@@ -121,7 +122,7 @@
 		var list = _privates[this.id].objectsSortedForRenderingUsingZIndex;
 		var done = false;
 		for(var i = 0; i < list.length; i++) {
-			if (list.id == object.id) {
+			if (list.id === object.id) {
 				// Remove object from list.
 				_privates[this.id].objectsSortedForRenderingUsingZIndex.splice(i, 1);
 

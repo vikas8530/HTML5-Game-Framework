@@ -25,6 +25,7 @@ window.onDocumentReady(function(){
 	rooms.game = new Game.Room("room_game", function(gameRoom) {
 		window.Game.RenderingHelper.setDefaultForRenderingText(gameRoom, fonts.greatVibes, "30px", "black", "left", "top");	
 	});
+	// If setting both color and background image, image will be drawn. If nothing is set, default black color will be used
 	rooms.game.setBackgroundColor("#444");
 	rooms.game.setBackgroundImage(backgrounds.background);
 
@@ -98,7 +99,7 @@ window.onDocumentReady(function(){
 			object.y -= 200;
 		});
 		obj4.setOnDraw(function(object, gameRoom) {
-			if(object.sprite != null) {
+			if(object.sprite !== null) {
 				object.sprite.draw(gameRoom, object.x, object.y);
 			}
 			window.Game.RenderingHelper.drawText(gameRoom, "Hi " + (new Date().getTime()), object.x, object.y + 100);
@@ -112,5 +113,5 @@ window.onDocumentReady(function(){
 	})();
 
 	// Initialize the game
-	game.initialize("#gameWrapper");
+	game.initialize("#gameWrapper", true);
 });

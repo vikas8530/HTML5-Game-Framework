@@ -30,15 +30,17 @@
 		STATE_LOADING: "onFrameChangeForLoading"
 	};
 
+	var framesPerSecond = 0, totalSeconds = 0, totalFPS = 0;
+
 	// Private object, shared by all game objects. These function should be called with the current executing game object's context
 	var _game = {
 		onCreate: function() {
 			this.room.onCreate(_privates[this.id].canvas);
-			_executeOverridenFunction.call(this, "onCreate");
+			_executeOverriddenFunction.call(this, "onCreate");
 			_privates[this.id].currentState = STATE_LOADING;
 		},
 		onStart: function() {
-			_executeOverridenFunction.call(this, "onStart");
+			_executeOverriddenFunction.call(this, "onStart");
 			_privates[this.id].currentState = STATE_STARTED;
 		},
 		onFrameChangeForStarted: function() {
@@ -51,49 +53,49 @@
 			this.room.drawBackground();
 			this.room.drawObjects();
 
-			_executeOverridenFunction.call(this, "onFrameChangeForStarted");
+			_executeOverriddenFunction.call(this, "onFrameChangeForStarted");
 		},
 		onFrameChangeForPaused: function() {
-			_executeOverridenFunction.call(this, "onFrameChangeForPaused");
+			_executeOverriddenFunction.call(this, "onFrameChangeForPaused");
 		},
 		onFrameChangeForStopped: function() {
-			_executeOverridenFunction.call(this, "onFrameChangeForStopped");
+			_executeOverriddenFunction.call(this, "onFrameChangeForStopped");
 		},
 		onFrameChangeForLoading: function() {
-			_executeOverridenFunction.call(this, "onFrameChangeForLoading");
+			_executeOverriddenFunction.call(this, "onFrameChangeForLoading");
 			if(_privates[this.id].remainingResourcesToLoad <= 0) {
 				_privates[this.id].currentState = STATE_CREATED;
 			}
 		},
-		onRestart: function(customFunc) {
-			_executeOverridenFunction.call(this, "onRestart");
+		onRestart: function() {
+			_executeOverriddenFunction.call(this, "onRestart");
 			_privates[this.id].currentState = STATE_STARTED;
 		},
-		onResume: function(customFunc) {
-			_executeOverridenFunction.call(this, "onResume");
+		onResume: function() {
+			_executeOverriddenFunction.call(this, "onResume");
 			_privates[this.id].currentState = STATE_STARTED;
 		},
-		onPause: function(customFunc) {
-			_executeOverridenFunction.call(this, "onPause");
+		onPause: function() {
+			_executeOverriddenFunction.call(this, "onPause");
 			_privates[this.id].currentState = STATE_PAUSED;
 		},
-		onStop: function(customFunc) {
-			_executeOverridenFunction.call(this, "onStop");
+		onStop: function() {
+			_executeOverriddenFunction.call(this, "onStop");
 			_privates[this.id].currentState = STATE_STOPPED;
 		},
-		onDestroy: function(customFunc) {
-			_executeOverridenFunction.call(this, "onDestroy");
+		onDestroy: function() {
+			_executeOverriddenFunction.call(this, "onDestroy");
 			_privates[this.id].currentState = STATE_DESTROYED;
 		}
 	};
 
-	// Priavate object variables
+	// Private object variables
 	var _privates = {
 
 	};
 
 	window.Game = window.Game || {};
-	// Publically available constructor function
+	// Publicly available constructor function
 	window.Game.Game = function(name, room) {
 		if(!(this instanceof window.Game.Game)) {
 			throw new window.Game.Exceptions.IllegalFunctionCallInsteadOfObjectCreation();
@@ -222,11 +224,11 @@
 		}
 		_privates[this.id].fonts[fontName] = font;
 	};
-	window.Game.Game.prototype.initialize = function(canvasWrapperId) {
+	window.Game.Game.prototype.initialize = function(canvasWrapperId, debugEnabled) {
 		if(_privates[this.id].currentState !== STATE_NEW) {
 			throw "Game already initialized.";
 		}
-		if (document.querySelectorAll(canvasWrapperId).length != 1) {
+		if (document.querySelectorAll(canvasWrapperId).length !== 1) {
 			throw "Please provide a valid DOM element for wrapping game. It should exist and unique.";
 		}
 		var canvas = document.createElement("CANVAS");
@@ -242,7 +244,16 @@
 		_loadBackgrounds.call(this);
 		_loadSounds.call(this);
 		_loadFonts.call(this);
-		_gameFrameExecuter.call(this);
+		_gameFrameExecutor.call(this);
+
+		if(debugEnabled === true) {
+            setInterval(function () {
+                totalSeconds++;
+                totalFPS += framesPerSecond;
+                console.log("Seconds elapsed: " + totalSeconds + "\tFPS: " + framesPerSecond + "\t Average FPS: " + (totalFPS/totalSeconds));
+                framesPerSecond=0;
+            }, 1000);
+		}
 	};
 
 	window.Game.STATES = {
@@ -251,9 +262,9 @@
 	};
 
 	// Private helper functions
-	var _gameFrameExecuter = function() {
+	var _gameFrameExecutor = function() {
 		var func = nextFunctionForState[_privates[this.id].currentState];
-		if (null != func && "function" == typeof _game[func]) {
+		if (null !== func && "function" === typeof _game[func]) {
 			try {
 				_game[func].call(this);
 			} catch (err) {
@@ -262,7 +273,7 @@
 		}
 		var that = this;
 		requestAnimationFrame(function(){
-			_gameFrameExecuter.call(that);
+			_gameFrameExecutor.call(that);
 		});
 	};
 	var _loadSprites = function() {
@@ -303,9 +314,10 @@
 		}
 		
 	};
-	var _executeOverridenFunction = function(event) {
+	var _executeOverriddenFunction = function(event) {
+        framesPerSecond++;
 		var func = _privates[this.id].callbackFunctions[event];
-		if("function" == typeof func) {
+		if("function" === typeof func) {
 			try {
 				func();
 			} catch (err) {
@@ -314,7 +326,7 @@
 		}
 	};
 	var _setOnEventFunction = function(forEvent, customFunc) {
-		if ("function" == typeof customFunc || customFunc == null) { 
+		if ("function" === typeof customFunc || customFunc === null) {
 			// User is overriding this function, update in callbackFunctions 
 			_privates[this.id].callbackFunctions[forEvent] = customFunc;
 		} else {
@@ -323,7 +335,7 @@
 	};
 	var _aGameObjectWithSameNameExists = function(name) {
 		for (var key in _privates) {
-			if (_privates[key].name == name) {
+			if (_privates[key].name === name) {
 				return true;
 			}
 		}
