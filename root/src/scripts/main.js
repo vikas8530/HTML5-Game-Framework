@@ -59,9 +59,10 @@ window.onDocumentReady(function(){
 		// Define common objects
 
 		// Player object
-		objects.player = new Game.Object("obj_player", 100, 100, sprites.player);
+		objects.player = new Game.Object("obj_player", 100, 100, sprites.player, null, window.Game.Constants.SCALE.HALF, window.Game.Shared.scale(3/4));
 		objects.player.setOnCreate(function(object, gameRoom){
-			object.speed = 1;
+			object.speed = 3;
+			object.rotate = 135 * Math.PI / 180;
 			object.x = gameRoom.getWidth() / 2;
 			object.y = gameRoom.getHeight() / 2;
 		});
@@ -69,10 +70,15 @@ window.onDocumentReady(function(){
 			object.x += object.speed;
 			object.y += object.speed;
 			if(object.x > gameRoom.getWidth() || object.x < 0 || object.y > gameRoom.getHeight() || object.y < 0) {
-				object.speed *= -1;
+				object.speed *= -1.1;
+				if (object.speed > 20) {
+					object.speed = 20;
+				}
+                object.x += object.speed;
+                object.y += object.speed;
+				object.rotate = (object.rotate * 180 / Math.PI + 180) % 360 * Math.PI / 180;
 			}
 		});
-
 		// stats object
 		objects.stats = new Game.Object("obj_stats", 0, 0, null, 1000);
 		objects.stats.setOnDraw(function(object, gameRoom) {
@@ -81,28 +87,23 @@ window.onDocumentReady(function(){
 
 		// Add object instances to the game room
 		var obj1 = objects.player.getNewInstance();
-		obj1.setUpdateOnCreate(function(object, gameRoom) {
-			object.x += 50;
-		});
 		var obj2 = objects.player.getNewInstance();
 		obj2.setUpdateOnCreate(function(object, gameRoom) {
-			object.x += 200;
+			object.x += 100;
 		});
 		var obj3 = objects.player.getNewInstance();
 		obj3.setUpdateOnCreate(function(object, gameRoom) {
 			object.x += 200;
-			object.y += 200;
 		});
 		var obj4 = objects.player.getNewInstance();
 		obj4.setUpdateOnCreate(function(object, gameRoom) {
-			object.x -= 200;
-			object.y -= 200;
+			object.x += 300;
 		});
 		obj4.setOnDraw(function(object, gameRoom) {
 			if(object.sprite !== null) {
-				object.sprite.draw(gameRoom, object.x, object.y);
+				object.sprite.drawWithOffset(gameRoom, object.x , object.y, object.offset.x, object.offset.y, object.rotate);
 			}
-			window.Game.RenderingHelper.drawText(gameRoom, "Hi " + (new Date().getTime()), object.x, object.y + 100);
+			window.Game.RenderingHelper.drawText(gameRoom, "2", object.x, object.y, fonts.IndieFlower, "50px", "center", "middle");
 		});
 		obj4.setZIndex(-100);
 		rooms.game.addObject(objects.player.getName(), obj1);

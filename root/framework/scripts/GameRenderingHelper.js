@@ -26,7 +26,7 @@
 			throw new window.Game.Exceptions.IllegalArgumentsException("Font, size, style and align (horizontally and vertically) are must");
 		}
 	};
-	window.Game.RenderingHelper.drawText = function(gameRoom, text, x, y, alignHorizontally, alignVertically, style, stroke) {
+	window.Game.RenderingHelper.drawText = function(gameRoom, text, x, y, font, size, alignHorizontally, alignVertically, style, stroke) {
 		if(!(gameRoom instanceof window.Game.Room)) {
 			throw new window.Game.Exceptions.IllegalArgumentsException("A gameRoom object is expected to draw text.");
 		}
@@ -46,7 +46,14 @@
 		} else {
 			ctx.fillStyle = defaultStyle;
 		}
-		ctx.font = defaultSize + " " + defaultFont.getValueToSetInCanvas();
+		if(!size) {
+			size = defaultSize;
+		}
+		if(font instanceof window.Game.Font) {
+			ctx.font = size + " " + font.getValueToSetInCanvas();
+		} else {
+            ctx.font = size + " " + defaultFont.getValueToSetInCanvas();
+        }
 		if(stroke) {
 			ctx.strokeText(("" + text), x, y);
 		} else {

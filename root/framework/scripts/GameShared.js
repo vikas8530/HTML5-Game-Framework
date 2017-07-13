@@ -13,4 +13,9 @@
 		id++;
 		return id.toString();
 	};
+	window.Game.Shared.scale = function (scaleBy) {
+		var response = {};
+		response[window.Game.Constants.KEY.SCALE_BY] = scaleBy;
+		return response;
+    }
 })();

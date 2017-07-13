@@ -1,4 +1,7 @@
 1. Frames per second reduced to 0 when tab is switched. Handle this scenario when the tab isn't active
+2. For the local functions which are checking _private[id].*, call that function as following if possible:
+    _func.call(_private[id])
+    This will help reducing unnecessary conditions
 
 
 
